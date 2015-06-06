@@ -32,14 +32,14 @@ func HttpPost(url string, param string) ([]byte, error) {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != 200 {
-		return nil, errors.New("Err - " + resp.Status)
-	}
-
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Error(err)
 		return nil, err
+	}
+
+	if resp.StatusCode != 200 {
+		return body, errors.New("Err - " + resp.Status)
 	}
 
 	return body, nil
@@ -57,14 +57,14 @@ func HttpPostJson(url string, buff []byte) ([]byte, error) {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != 200 {
-		return nil, errors.New("Err - " + resp.Status)
-	}
-
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Error(err)
 		return nil, err
+	}
+
+	if resp.StatusCode != 200 {
+		return nil, errors.New("Err - " + resp.Status)
 	}
 
 	return body, nil
@@ -78,14 +78,14 @@ func HttpGet(url string, param string) ([]byte, error) {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != 200 {
-		return nil, errors.New("Err - " + resp.Status)
-	}
-
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Error(err)
 		return nil, err
+	}
+
+	if resp.StatusCode != 200 {
+		return nil, errors.New("Err - " + resp.Status)
 	}
 
 	return body, nil
@@ -102,15 +102,16 @@ func HttpDo(method string, url string, param string) ([]byte, error) {
 	resp, err := client.Do(req)
 	defer resp.Body.Close()
 
-	if resp.StatusCode != 200 {
-		return nil, errors.New("Err - " + resp.Status)
-	}
-
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Error(err)
 		return nil, err
 	}
+
+	if resp.StatusCode != 200 {
+		return nil, errors.New("Err - " + resp.Status)
+	}
+
 	return body, nil
 }
 
@@ -155,14 +156,14 @@ func UploadFile(url string, fields []string, fieldsvalue []string, filefield []s
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != 200 {
-		return nil, errors.New("Err - " + resp.Status)
-	}
-
 	buff, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Error(err)
 		return nil, err
+	}
+
+	if resp.StatusCode != 200 {
+		return nil, errors.New("Err - " + resp.Status)
 	}
 
 	return buff, nil
